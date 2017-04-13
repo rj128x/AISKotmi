@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Server>192.168.141.251</Server>
+  <User>EVA</User>
+  <Password>q1234e</Password>
+
+  
+  <KotmiFields>
+    <String>15=1Г, P</String>
+    <String>45=2Г, P</String>
+    <String>75=3Г, P</String>
+    <String>105=4Г, P</String>
+    <String>135=5Г, P</String>
+    <String>165=6Г, P</String>
+    <String>195=7Г, P</String>
+    <String>225=8Г, P</String>
+    <String>255=9Г, P</String>
+    <String>285=10Г, P</String>
+    <String>315=ВЛ 500 Емелино, P</String>
+    <String>345=ВЛ 500 Карманово, P</String>
+    <String>375=ВЛ 500 Вятка, P</String>
+    <String>405=2АТ 500, P</String>
+    <String>435=3АТ 500, P</String>
+    <String>465=ВЛ 220 Иж-1, P</String>
+    <String>495=ВЛ 220 Иж-2, P</String>
+    <String>525=ВЛ 220 Каучук-1, P</String>
+    <String>555=ВЛ 220 Каучук-2, P</String>
+    <String>585=ВЛ 220 Светлая, P</String>
+    <String>615=Ввод 220кВ 2АТ, P</String>
+    <String>645=Ввод 220кВ 3АТ, P</String>
+    <String>675=Ввод 220кВ 4Т, P</String>
+    <String>705=Ввод 220кВ 5,6АТ, P</String>
+    <String>735=ОВ 220кВ, P</String>
+    <String>765=P   ВЛ110 Березовка</String>
+    <String>795=P   ВЛ110 Дубовая</String>
+    <String>825=P   ВЛ110 Водозабор-1</String>
+    <String>855=P   ВЛ110 Водозабор-2</String>
+    <String>885=P   ВЛ110 Ивановка</String>
+    <String>915=P   ВЛ110 Каучук</String>
+    <String>945=P   ВЛ110 Светлая</String>
+    <String>975=P   ВЛ110 Чa ТЭЦ</String>
+    <String>1005=P   ВЛ110 КШТ-1</String>
+    <String>1035=P   ВЛ110 КШТ-2</String>
+    <String>1065=P   Ввод 110кВ 1Т</String>
+    <String>1095=P   Ввод 110кВ 5,6АТ</String>
+    <String>1125=P   ОВ 110кВ</String>
+    <String>1155=P   Шлюз-1</String>
+    <String>1185=P   Шлюз-2</String>
+    <String>1215=P   Фильтровaльнaя-1</String>
+    <String>1245=P   Фильтровaльнaя-2</String>
+    <String>22046=ВЛ500 Емелино, P</String>
+    <String>22051=ВЛ500 КаГРЭС, P</String>
+    <String>22056=ВЛ500 Вятка, P</String>
+    <String>22060=2АТ 500, P</String>
+    <String>22064=3АТ 500, P</String>
+    <String>22260=ВЛ110 КШТ-1 P</String>
+    <String>22269=ВЛ110 КШТ-2 P</String>
+    <String>22278=ВЛ110 Светлая P</String>
+    <String>22287=ВЛ110 Ивановка P</String>
+    <String>22296=ВЛ110 Каучук P</String>
+    <String>22305=ВЛ110 ЧаТЭЦ P</String>
+    <String>22314=Ввод 5-6АТ 110 кВ P</String>
+    <String>22323=ВЛ110 Березовка P</String>
+    <String>22332=ОВ-110 P</String>
+    <String>22341=ВЛ110 Дубовая P</String>
+    <String>22350=Ввод 1Т 110 кВ P</String>
+    <String>22359=ВЛ110 Водозабор-2 P</String>
+    <String>22368=ВЛ110 Водозабор-1 P</String>
+    <String>22377=ШСВ 220 кВ P</String>
+    <String>22386=ОВ 220 кВ P</String>
+    <String>22395=Ввод 2АТГ P</String>
+    <String>22404=Ввод 3АТГ P</String>
+    <String>22413=ВЛ220 Светлая P</String>
+    <String>22422=ВЛ220 Каучук-1 P</String>
+    <String>22431=Ввод 4Т 220 кВ P</String>
+    <String>22440=Ввод 5-6АТ 220 кВ P</String>
+    <String>22449=ВЛ220 Каучук-2 P</String>
+    <String>22458=ВЛ220 Ижевск-2 P</String>
+    <String>22467=ВЛ220 Ижевск-1 P</String>
+    <String>22476=Шлюз-1 P</String>
+    <String>22485=Шлюз-2 P</String>
+    <String>22494=Фильтр-1 P</String>
+    <String>22503=Фильтр-2 P</String>
+    <String>22512=Г1 P</String>
+    <String>22521=Г2 P</String>
+    <String>22530=Г3 P</String>
+    <String>22539=Г4 P</String>
+    <String>22548=Г5 P</String>
+    <String>22557=Г6 P</String>
+    <String>22566=Г7 P</String>
+    <String>22575=Г8 P</String>
+    <String>22584=Г9 P</String>
+    <String>22593=Г10 P</String>
+
+  </KotmiFields>
+  
+</Settings>
