@@ -16,11 +16,13 @@ namespace KotmiData
 	{
 		protected List<DateTime> sentData;
 		protected Dictionary<int, string> KotmiFields;
+		protected int currentTI = 0;
+		protected int currentStep = 0;
 		public Form1() {
 			InitializeComponent();
 			Logger.init(Directory.GetCurrentDirectory().ToString()+"/logs", "log");
 			Logger.info("Старт приложения");
-			Settings.init("/Data/MainSettings.xml");
+			Settings.init(Application.StartupPath+"/Data/MainSettings.xml");
 			
 			KotmiClass.init(axScadaCli1, axScadaAbo1);
 			KotmiClass.Single.OnFinishRead += Single_OnFinishRead;
@@ -31,9 +33,11 @@ namespace KotmiData
 				string[] data = field.Split('=');
 				int val = Convert.ToInt32(data[0]);
 				string name = data[1];
-				KotmiFields.Add(val, name);
+				KotmiFields.Add(val, String.Format("[{0}] [{1}]",val,name));
 			}
-			lbItems.DataSource = KotmiFields;
+			lbItems.DataSource = new BindingSource(KotmiFields,null);
+			lbItems.DisplayMember = "Value";
+			lbItems.ValueMember = "Key";
 			
 		}
 
@@ -68,42 +72,64 @@ namespace KotmiData
 
 			DataGridView grid;
 			TabPage page;
-
+			
+			
 			if (chbStep.Checked) {
-				grid= new DataGridView();
-				page = new TabPage((tcKotmiData.TabCount + 1).ToString());
-				tcKotmiData.TabPages.Add(page);
-				grid.DataSource = (from entry in DataStr
-													 orderby entry.Key
-													 select new { entry.Key, entry.Value }).ToList();
-				grid.Parent = page;
-				grid.Dock = DockStyle.Fill;
-				/*grid.Columns[0].Width = 150;
-				grid.Columns[1].Width = 100;*/
+				getPage(DataStr, true);
 			}
 
 			if (chbHH.Checked) {
-				grid = new DataGridView();
-				page = new TabPage((tcKotmiData.TabCount + 1).ToString());
-				tcKotmiData.TabPages.Add(page);
-				grid.DataSource = (from entry in HHDataStr
-													 orderby entry.Key
-													 select new { entry.Key, entry.Value }).ToList();
-				grid.Parent = page;
-				grid.Dock = DockStyle.Fill;
-				/*grid.Columns[0].Width = 150;
-				grid.Columns[1].Width = 100;*/
+				getPage(DataStr, false);
 			}
 		}
+
+		protected TabPage getPage(Dictionary<string, string> data,bool step) {
+			string name = "";
+			if (KotmiFields.ContainsKey(currentTI)) {
+				name = KotmiFields[currentTI];
+			} else {
+				name = currentTI.ToString();
+			}
+			DataGridView grid = new DataGridView();
+			TabPage page = new TabPage((!step?"HH_":"") + name);
+			tcKotmiData.TabPages.Add(page);
+			grid.DataSource = (from entry in data
+												 orderby entry.Key
+												 select new { entry.Key, entry.Value }).ToList();
+			grid.Parent = page;
+			grid.Dock = DockStyle.Fill;
+						
+			return page;
+		}
+		
 
 		private void button1_Click(object sender, EventArgs e) {
 			bool ok=KotmiClass.Connect();					
 			if (ok) {
 				sentData = new List<DateTime>();
+				int TI = Convert.ToInt32(txtTI.Text);
+				if (TI == 0) {
+					try {
+						KeyValuePair<int, string> sel = (KeyValuePair<int, string>)lbItems.SelectedItem;
+						TI = sel.Key;
+					}catch (Exception ex) {
+						TI = 0;
+					}
+				}
+				currentStep = Convert.ToInt32(txtStep.Text);
+				currentTI = TI;
 				KotmiClass.Single.ReadVals(Convert.ToDateTime(DTPStart.Value.ToString("dd.MM.yyyy HH:mm")), Convert.ToDateTime(DTPEnd.Value.ToString("dd.MM.yyyy HH:mm")), 
-					sentData,Convert.ToInt32(txtTI.Text),Convert.ToInt32(txtStep.Text));
+					sentData,currentTI,currentStep);
 			} else {
 				MessageBox.Show("Не удалось подключиться");
+			}
+		}
+
+		private void tcKotmiData_MouseDoubleClick(object sender, MouseEventArgs e) {
+			if (e.Button == MouseButtons.Right) {
+				try {
+					tcKotmiData.TabPages.Remove(tcKotmiData.SelectedTab);
+				} catch { }
 			}
 		}
 

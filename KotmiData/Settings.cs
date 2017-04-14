@@ -47,8 +47,11 @@ namespace KotmiData
 		public static Settings Single { get; protected set; }
 		public static void init(string filename) {
 			try {
-				Settings single = XMLSer<Settings>.fromXML(filename);
+				Settings single = XMLSer<Settings>.fromXML( filename);
 				Single = single;
+				//single.KotmiFields = new List<string>();
+				/*single.KotmiFields.Add("214235345");
+				XMLSer<Settings>.toXML(single, "C:/test.xml");*/
 			} catch (Exception e) {
 				Logger.error("Ошибка при чтении файла настроек " + e, Logger.LoggerSource.server);
 			}
