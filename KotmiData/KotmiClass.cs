@@ -72,7 +72,7 @@ namespace KotmiData
 		}
 
 		public void ReadVals(DateTime dateStart, DateTime dateEnd,List<DateTime>sentData, int TI,int stepSeconds) {			
-			if (Client.CliActive) {
+			if (Connect()) {
 				Data = new Dictionary<DateTime, double>();
 				
 				Abo.BlockBegin();				
@@ -106,6 +106,14 @@ namespace KotmiData
 				}
 			}
 			return resDT;
+		}
+
+		public static void Close() {
+			try {
+				Single.Client.Close();
+			} catch  {
+
+			}
 		}
 
 	}

@@ -119,6 +119,8 @@
 			// chbHH
 			// 
 			this.chbHH.AutoSize = true;
+			this.chbHH.Checked = true;
+			this.chbHH.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chbHH.Location = new System.Drawing.Point(11, 130);
 			this.chbHH.Name = "chbHH";
 			this.chbHH.Size = new System.Drawing.Size(42, 17);

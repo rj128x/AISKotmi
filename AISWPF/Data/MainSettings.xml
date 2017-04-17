@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Server>192.168.140.240</Server>
+  <User>sa</User>
+  <Password>pswd</Password>
+  <DBName>Piramida2001</DBName>
+  <SMTPServer>mx-votges-021.corp.gidroogk.com</SMTPServer>
+  <SMTPUser>is</SMTPUser>
+  <SMTPPassword>12345</SMTPPassword>
+  <SMTPDomain>CORP</SMTPDomain>
+  <SMTPFrom>is@votges.rushydro.ru</SMTPFrom>
+  <SMTPTo>chekunovaMV@votges.rushydro.ru</SMTPTo>
+  <SMTPPort>25</SMTPPort>
+  <Sources>
+    <string>8737_0=КомУчет1</string>
+    <string>8738_0=КомУчет2</string>
+    <string>8739_0=ТехУчет1</string>
+    <string>8740_0=ТехУчет2</string>
+    <string>0_2=Потребители</string>
+  </Sources>
+
+</Settings>

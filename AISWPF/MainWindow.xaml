@@ -1,0 +1,59 @@
+﻿<Window x:Class="AISWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AISWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Calendar Name="selDate"  Margin="0,5,0,5"/>
+            <ListBox Name="lbSources"  Margin="0,5,0,5"/>
+            <Button Name="btnShow" Content="Show" Click="btnShow_Click" Margin="0,5,0,5"/>
+            
+        </StackPanel>
+        <Grid Grid.Row="0" Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Name="scrRes" Grid.Column="1" Grid.Row="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" ScrollChanged="ScrollViewer_ScrollChanged" >
+                <StackPanel Name="pnlFull" Orientation="Vertical"/>
+            </ScrollViewer>
+            <ScrollViewer Name="scrNames" Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,18" ScrollChanged="scrNames_ScrollChanged" IsEnabled="False">
+                    <StackPanel Name="pnlNames" Orientation="Vertical"/>
+            </ScrollViewer>
+            <ScrollViewer Name="scrDates" Grid.Column="1" Grid.Row="0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden"  Margin="0,0,18,00" ScrollChanged="scrDates_ScrollChanged"  IsEnabled="False">
+                    <StackPanel Name="pnlDates" Orientation="Horizontal"/>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+            <TextBox  Name="Log"  AcceptsReturn="True" TextWrapping="Wrap" />
+            <Grid  Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <ListBox Name="lbWorkingLog" />
+                <Button Grid.Row="1" Content="Mail" Name="btnSendMail" Click="btnSendMail_Click"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

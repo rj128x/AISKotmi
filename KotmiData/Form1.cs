@@ -41,6 +41,8 @@ namespace KotmiData
 			
 		}
 
+		
+
 		private void Single_OnFinishRead(Dictionary<DateTime, double> Data) {			
 			Dictionary<string, string> DataStr = new Dictionary<string, string>();
 			Dictionary<string, string> HHDataStr = new Dictionary<string, string>();
@@ -48,16 +50,29 @@ namespace KotmiData
 			double sum = 0;
 			double sumHH = 0;
 			double cntHH = 0;
+			double sumHHPlus = 0;
+			double sumHHMinus = 0;
+			double cntHHPlus = 1;
+			double cntHHMinus = 1;
 			foreach (DateTime date in FullData.Keys) {
 				double val = FullData[date];
 				DataStr.Add(date.ToString("dd.MM.yyyy HH:mm:ss"), String.Format("{0:0.000}",val));
 				sum += val;
 				sumHH += val;
 				cntHH += 1;
+				if (val > 0) {
+					sumHHPlus += val;
+					cntHHPlus++;
+				} else {
+					sumHHMinus += val;
+					cntHHMinus++;
+				}
 
 				if (date.Second==0 && (date.Minute==0 || date.Minute == 30)) {
-					HHDataStr.Add(date.ToString("dd.MM.yyyy HH:mm:ss"), String.Format("{0:0.000}", sumHH / cntHH));
+					HHDataStr.Add(date.ToString("dd.MM.yyyy HH:mm:ss"), String.Format("[{0:0.000}] P [{1:0.000}] O [{2:0.000}]", sumHH / cntHH, sumHHPlus/cntHH, sumHHMinus/cntHH));
 					sumHH = 0;
+					sumHHPlus = 0;
+					sumHHMinus = 0;
 					cntHH = 0;
 				}
 			}
@@ -79,8 +94,9 @@ namespace KotmiData
 			}
 
 			if (chbHH.Checked) {
-				getPage(DataStr, false);
+				getPage(HHDataStr, false);
 			}
+			//KotmiClass.Close();
 		}
 
 		protected TabPage getPage(Dictionary<string, string> data,bool step) {
@@ -104,8 +120,7 @@ namespace KotmiData
 		
 
 		private void button1_Click(object sender, EventArgs e) {
-			bool ok=KotmiClass.Connect();					
-			if (ok) {
+			if ((chbHH.Checked||chbStep.Checked)&&lbItems.SelectedIndex>0) {
 				sentData = new List<DateTime>();
 				int TI = Convert.ToInt32(txtTI.Text);
 				if (TI == 0) {
@@ -132,7 +147,5 @@ namespace KotmiData
 				} catch { }
 			}
 		}
-
-
 	}
 }

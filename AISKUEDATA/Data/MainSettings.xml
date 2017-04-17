@@ -6,6 +6,12 @@
   <User>sa</User>
   <Password>pswd</Password>
   <DBName>Piramida2001</DBName>
-
+  <Sources>
+    <string>8737~0~12=КомУчет1</string>
+    <string>8738~0~12=КомУчет2</string>
+    <string>8739~0~12=ТехУчет1</string>
+    <string>8740~0~12=ТехУчет2</string>
+    <string>0~2~12=Потребители</string>
+  </Sources>
 
 </Settings>
