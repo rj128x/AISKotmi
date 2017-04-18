@@ -7,7 +7,6 @@ using AxScdSys;
 
 namespace KotmiData
 {
-
 	public delegate void OnFinishReadDelegate(Dictionary<DateTime, double> Data);
 	public class KotmiClass
 	{

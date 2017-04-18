@@ -224,10 +224,17 @@ namespace AISWPF
 				comSTR = String.Format("SELECT VALUE0 FROM DATA WHERE OBJECT={0} AND OBJTYPE={1} AND ITEM={2} AND PARNUMBER=12 AND DATA_DATE='{3}'",
 					rec.Source.Obj, rec.Source.ObjType, rec.Source.Item, date.ToString(DateFormat));
 				SqlCommand command = new SqlCommand(comSTR, con);
-				double val = Convert.ToDouble(command.ExecuteScalar());
-				rec.Values[date] = String.Format("{0:0.##}", val).Replace(",", ".");
-				changedVal = rec.Values[date];
-				Logger.info(String.Format("========получено значение: {0}", changedVal));
+				object nv = command.ExecuteScalar();
+				if (nv == null) {
+					changedVal = "---";
+					rec.Values[date] = "---";
+					Logger.info(String.Format("========значение не найдено: {0}", changedVal));
+				} else {
+					double val = Convert.ToDouble(nv);
+					rec.Values[date] = String.Format("{0:0.##}", val).Replace(",", ".");
+					changedVal = rec.Values[date];
+					Logger.info(String.Format("========получено значение: {0}", changedVal));
+				}
 				con.Close();
 			} catch (Exception e) {
 				Logger.info("===Ошибка при чтении нового значения " + e.ToString());
