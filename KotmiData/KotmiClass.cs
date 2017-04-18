@@ -15,7 +15,7 @@ namespace KotmiData
 		public AxScadaAbo Abo { get; set; }
 		public Dictionary<DateTime, double> Data;
 		public event OnFinishReadDelegate OnFinishRead;
-
+		
 		public static KotmiClass Single { get; protected set; }
 
 		protected KotmiClass() { }
