@@ -107,6 +107,7 @@
       <Lcid>0</Lcid>
       <WrapperTool>aximp</WrapperTool>
       <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
     <COMReference Include="ScdSys">
       <Guid>{7F259B0B-3647-11D2-B6E2-00A0247FA840}</Guid>

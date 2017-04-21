@@ -29,6 +29,11 @@
 			this.axScadaCli1 = new AxScdSys.AxScadaCli();
 			this.axScadaAbo1 = new AxScdSys.AxScadaAbo();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.panel4 = new System.Windows.Forms.Panel();
+			this.lbItems = new System.Windows.Forms.ListBox();
+			this.panel3 = new System.Windows.Forms.Panel();
+			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.chbStep = new System.Windows.Forms.CheckBox();
@@ -39,17 +44,12 @@
 			this.txtStep = new System.Windows.Forms.TextBox();
 			this.DTPEnd = new System.Windows.Forms.DateTimePicker();
 			this.tcKotmiData = new System.Windows.Forms.TabControl();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.panel3 = new System.Windows.Forms.Panel();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.panel4 = new System.Windows.Forms.Panel();
-			this.lbItems = new System.Windows.Forms.ListBox();
 			((System.ComponentModel.ISupportInitialize)(this.axScadaCli1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.axScadaAbo1)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
-			this.panel3.SuspendLayout();
 			this.panel4.SuspendLayout();
+			this.panel3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// axScadaCli1
@@ -85,6 +85,55 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(442, 311);
 			this.panel1.TabIndex = 7;
+			// 
+			// panel2
+			// 
+			this.panel2.Controls.Add(this.panel4);
+			this.panel2.Controls.Add(this.panel3);
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+			this.panel2.Location = new System.Drawing.Point(152, 0);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(290, 311);
+			this.panel2.TabIndex = 10;
+			// 
+			// panel4
+			// 
+			this.panel4.Controls.Add(this.lbItems);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel4.Location = new System.Drawing.Point(0, 25);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(290, 286);
+			this.panel4.TabIndex = 11;
+			// 
+			// lbItems
+			// 
+			this.lbItems.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lbItems.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lbItems.FormattingEnabled = true;
+			this.lbItems.ItemHeight = 14;
+			this.lbItems.Location = new System.Drawing.Point(0, 0);
+			this.lbItems.Name = "lbItems";
+			this.lbItems.Size = new System.Drawing.Size(290, 286);
+			this.lbItems.TabIndex = 10;
+			this.lbItems.SelectedIndexChanged += new System.EventHandler(this.lbItems_SelectedIndexChanged);
+			// 
+			// panel3
+			// 
+			this.panel3.Controls.Add(this.textBox1);
+			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel3.Location = new System.Drawing.Point(0, 0);
+			this.panel3.Name = "panel3";
+			this.panel3.Size = new System.Drawing.Size(290, 25);
+			this.panel3.TabIndex = 10;
+			// 
+			// textBox1
+			// 
+			this.textBox1.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.textBox1.Location = new System.Drawing.Point(0, 2);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(290, 20);
+			this.textBox1.TabIndex = 11;
+			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
 			// label2
 			// 
@@ -193,55 +242,6 @@
 			this.tcKotmiData.TabIndex = 8;
 			this.tcKotmiData.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tcKotmiData_MouseDoubleClick);
 			// 
-			// panel2
-			// 
-			this.panel2.Controls.Add(this.panel4);
-			this.panel2.Controls.Add(this.panel3);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panel2.Location = new System.Drawing.Point(152, 0);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(290, 311);
-			this.panel2.TabIndex = 10;
-			// 
-			// panel3
-			// 
-			this.panel3.Controls.Add(this.textBox1);
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel3.Location = new System.Drawing.Point(0, 0);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(290, 25);
-			this.panel3.TabIndex = 10;
-			// 
-			// textBox1
-			// 
-			this.textBox1.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.textBox1.Location = new System.Drawing.Point(0, 2);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(290, 20);
-			this.textBox1.TabIndex = 11;
-			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-			// 
-			// panel4
-			// 
-			this.panel4.Controls.Add(this.lbItems);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(0, 25);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(290, 286);
-			this.panel4.TabIndex = 11;
-			// 
-			// lbItems
-			// 
-			this.lbItems.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lbItems.Font = new System.Drawing.Font("Cordia New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.lbItems.FormattingEnabled = true;
-			this.lbItems.ItemHeight = 14;
-			this.lbItems.Location = new System.Drawing.Point(0, 0);
-			this.lbItems.Name = "lbItems";
-			this.lbItems.Size = new System.Drawing.Size(290, 286);
-			this.lbItems.TabIndex = 10;
-			this.lbItems.SelectedIndexChanged += new System.EventHandler(this.lbItems_SelectedIndexChanged);
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -258,9 +258,9 @@
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panel2.ResumeLayout(false);
+			this.panel4.ResumeLayout(false);
 			this.panel3.ResumeLayout(false);
 			this.panel3.PerformLayout();
-			this.panel4.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}

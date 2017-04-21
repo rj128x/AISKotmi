@@ -35,8 +35,8 @@ namespace KotmiData
 				string[] data = field.Split('=');
 				int val = Convert.ToInt32(data[0]);
 				string name = data[1];
-				KotmiFields.Add(val, String.Format("[{0}] [{1}]",val,name));
-				VisibleFields.Add(val, String.Format("[{0}] [{1}]", val, name));
+				KotmiFields.Add(val, String.Format("{0,-8} {1}",val,name));
+				VisibleFields.Add(val, String.Format("{0,-8} {1}", val, name));
 			}
 			lbItems.DataSource = new BindingSource(VisibleFields,null);
 			lbItems.DisplayMember = "Value";
