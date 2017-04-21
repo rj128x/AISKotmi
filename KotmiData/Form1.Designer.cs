@@ -25,9 +25,6 @@
 		/// содержимое этого метода с помощью редактора кода.
 		/// </summary>
 		private void InitializeComponent() {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-			this.axScadaCli1 = new AxScdSys.AxScadaCli();
-			this.axScadaAbo1 = new AxScdSys.AxScadaAbo();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
@@ -44,29 +41,11 @@
 			this.txtStep = new System.Windows.Forms.TextBox();
 			this.DTPEnd = new System.Windows.Forms.DateTimePicker();
 			this.tcKotmiData = new System.Windows.Forms.TabControl();
-			((System.ComponentModel.ISupportInitialize)(this.axScadaCli1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.axScadaAbo1)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// axScadaCli1
-			// 
-			this.axScadaCli1.Location = new System.Drawing.Point(13, 13);
-			this.axScadaCli1.Name = "axScadaCli1";
-			this.axScadaCli1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axScadaCli1.OcxState")));
-			this.axScadaCli1.Size = new System.Drawing.Size(75, 23);
-			this.axScadaCli1.TabIndex = 0;
-			// 
-			// axScadaAbo1
-			// 
-			this.axScadaAbo1.Location = new System.Drawing.Point(1, 2);
-			this.axScadaAbo1.Name = "axScadaAbo1";
-			this.axScadaAbo1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axScadaAbo1.OcxState")));
-			this.axScadaAbo1.Size = new System.Drawing.Size(75, 23);
-			this.axScadaAbo1.TabIndex = 1;
 			// 
 			// panel1
 			// 
@@ -238,7 +217,7 @@
 			this.tcKotmiData.Location = new System.Drawing.Point(442, 0);
 			this.tcKotmiData.Name = "tcKotmiData";
 			this.tcKotmiData.SelectedIndex = 0;
-			this.tcKotmiData.Size = new System.Drawing.Size(745, 311);
+			this.tcKotmiData.Size = new System.Drawing.Size(644, 311);
 			this.tcKotmiData.TabIndex = 8;
 			this.tcKotmiData.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tcKotmiData_MouseDoubleClick);
 			// 
@@ -246,15 +225,11 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1187, 311);
+			this.ClientSize = new System.Drawing.Size(1086, 311);
 			this.Controls.Add(this.tcKotmiData);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.axScadaAbo1);
-			this.Controls.Add(this.axScadaCli1);
 			this.Name = "Form1";
 			this.Text = "Form1";
-			((System.ComponentModel.ISupportInitialize)(this.axScadaCli1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.axScadaAbo1)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panel2.ResumeLayout(false);
@@ -266,9 +241,6 @@
 		}
 
 		#endregion
-
-		private AxScdSys.AxScadaCli axScadaCli1;
-		private AxScdSys.AxScadaAbo axScadaAbo1;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;

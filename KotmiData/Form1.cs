@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AxScdSys;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -21,11 +22,24 @@ namespace KotmiData
 		protected int currentStep = 0;
 		public Form1() {
 			InitializeComponent();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+
 			Logger.init(Directory.GetCurrentDirectory().ToString()+"/logs", "log");
 			Logger.info("Старт приложения");
 			Settings.init(Application.StartupPath+"/Data/MainSettings.xml");
-			
-			KotmiClass.init(axScadaCli1, axScadaAbo1);
+
+			AxScadaCli cli = new AxScadaCli();
+			AxScadaAbo abo = new AxScadaAbo();
+			((System.ComponentModel.ISupportInitialize)(cli)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(abo)).BeginInit();
+			cli.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("cli.OcxState")));
+			abo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("abo.OcxState")));
+			this.Controls.Add(cli);
+			this.Controls.Add(abo);
+			((System.ComponentModel.ISupportInitialize)(cli)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(abo)).EndInit();
+
+			KotmiClass.init(cli,abo);
 			KotmiClass.Single.OnFinishRead += Single_OnFinishRead;
 			DTPEnd.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy HH:00"));
 			DTPStart.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy 00:00"));
