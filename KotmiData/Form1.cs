@@ -16,6 +16,7 @@ namespace KotmiData
 	{
 		protected List<DateTime> sentData;
 		protected Dictionary<int, string> KotmiFields;
+		protected Dictionary<int, string> VisibleFields;
 		protected int currentTI = 0;
 		protected int currentStep = 0;
 		public Form1() {
@@ -29,13 +30,15 @@ namespace KotmiData
 			DTPEnd.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy HH:00"));
 			DTPStart.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy 00:00"));
 			KotmiFields = new Dictionary<int, string>();
+			VisibleFields = new Dictionary<int, string>();
 			foreach (string field in Settings.Single.KotmiFields) {
 				string[] data = field.Split('=');
 				int val = Convert.ToInt32(data[0]);
 				string name = data[1];
 				KotmiFields.Add(val, String.Format("[{0}] [{1}]",val,name));
+				VisibleFields.Add(val, String.Format("[{0}] [{1}]", val, name));
 			}
-			lbItems.DataSource = new BindingSource(KotmiFields,null);
+			lbItems.DataSource = new BindingSource(VisibleFields,null);
 			lbItems.DisplayMember = "Value";
 			lbItems.ValueMember = "Key";
 			
@@ -69,7 +72,7 @@ namespace KotmiData
 				}
 
 				if (date.Second==0 && (date.Minute==0 || date.Minute == 30)) {
-					HHDataStr.Add(date.ToString("dd.MM.yyyy HH:mm:ss"), String.Format("[{0:0.000}] P [{1:0.000}] O [{2:0.000}]", sumHH / cntHH, sumHHPlus/cntHH, sumHHMinus/cntHH));
+					HHDataStr.Add(date.ToString("dd.MM.yyyy HH:mm:ss"), String.Format("{0,15:0.000}{1,15:0.000}{2,15:0.000}", sumHH / cntHH, sumHHPlus/cntHH, sumHHMinus/cntHH));
 					sumHH = 0;
 					sumHHPlus = 0;
 					sumHHMinus = 0;
@@ -107,14 +110,22 @@ namespace KotmiData
 				name = currentTI.ToString();
 			}
 			DataGridView grid = new DataGridView();
+			grid.Font = new Font("Courier new", 8);			
+
 			TabPage page = new TabPage((!step?"HH_":"") + name);
 			tcKotmiData.TabPages.Add(page);
+			tcKotmiData.SelectedTab = page;
 			grid.DataSource = (from entry in data
 												 orderby entry.Key
 												 select new { entry.Key, entry.Value }).ToList();
 			grid.Parent = page;
 			grid.Dock = DockStyle.Fill;
-						
+
+			grid.Columns[0].Width = 150;
+			grid.Columns[1].Width = 400;
+			if (!step) {
+				grid.Columns[1].HeaderText = String.Format("{0,15}{1,15}{2,15}", "AVG", "PosAVG", "NegAVG");
+			}
 			return page;
 		}
 		
@@ -146,6 +157,29 @@ namespace KotmiData
 					tcKotmiData.TabPages.Remove(tcKotmiData.SelectedTab);
 				} catch { }
 			}
+		}
+
+		private void textBox1_TextChanged(object sender, EventArgs e) {
+			VisibleFields.Clear();
+			foreach (KeyValuePair<int,string> de in KotmiFields) {
+				if (de.Value.ToLower().Contains(textBox1.Text.ToLower())){
+					VisibleFields.Add(de.Key, de.Value);
+				}
+			}
+			lbItems.DataSource = new BindingSource(VisibleFields, null);
+			lbItems.DisplayMember = "Value";
+			lbItems.ValueMember = "Key";
+		}
+
+		private void lbItems_SelectedIndexChanged(object sender, EventArgs e) {
+			int TI = 0;
+			try {
+				KeyValuePair<int, string> sel = (KeyValuePair<int, string>)lbItems.SelectedItem;
+				TI = sel.Key;
+			} catch (Exception ex) {
+				TI = 0;
+			}
+			txtTI.Text = TI.ToString();
 		}
 	}
 }
