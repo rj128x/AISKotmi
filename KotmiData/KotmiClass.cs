@@ -53,9 +53,9 @@ namespace KotmiData
 		}
 
 		protected bool _Connect() {
-			Client.SrvAddress = "192.168.141.251";
-			Client.UserName = "EVA";
-			Client.UserPassword = "q1234e";
+			Client.SrvAddress = Settings.Single.Server;
+			Client.UserName = Settings.Single.User;
+			Client.UserPassword = Settings.Single.Password;
 			Client.Open();
 			return Client.CliActive;
 		}
