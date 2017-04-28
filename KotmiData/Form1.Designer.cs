@@ -128,7 +128,7 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.label1.Location = new System.Drawing.Point(41, 98);
+			this.label1.Location = new System.Drawing.Point(7, 98);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(35, 14);
 			this.label1.TabIndex = 7;
@@ -173,9 +173,9 @@
 			// txtTI
 			// 
 			this.txtTI.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.txtTI.Location = new System.Drawing.Point(86, 95);
+			this.txtTI.Location = new System.Drawing.Point(49, 95);
 			this.txtTI.Name = "txtTI";
-			this.txtTI.Size = new System.Drawing.Size(60, 20);
+			this.txtTI.Size = new System.Drawing.Size(97, 20);
 			this.txtTI.TabIndex = 5;
 			this.txtTI.Text = "0";
 			// 

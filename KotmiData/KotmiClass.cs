@@ -7,6 +7,21 @@ using AxScdSys;
 
 namespace KotmiData
 {
+	public class ArcField
+	{
+		public int ID { get; set; }
+		public bool PTI { get; set; }
+		public string Code { get; set; }
+
+		public ArcField(string name) {
+			string[] arr = name.Split('_');
+			ID = Int32.Parse(arr[1]);
+			PTI = arr[0] == "PTI";
+			Code = name;
+		}
+	}
+
+
 	public delegate void OnFinishReadDelegate(Dictionary<DateTime, double> Data);
 	public class KotmiClass
 	{
@@ -14,6 +29,7 @@ namespace KotmiData
 		public AxScadaAbo Abo { get; set; }
 		public Dictionary<DateTime, double> Data;
 		public event OnFinishReadDelegate OnFinishRead;
+		public bool AllSent = false;
 		
 		public static KotmiClass Single { get; protected set; }
 
@@ -28,13 +44,13 @@ namespace KotmiData
 		}
 
 		protected void init() {
-			Abo.OnRowValue += Abo_OnRowValue1;
+			Abo.OnRowValue += Abo_OnRowValue;
 			Abo.OnBlockBegin += Abo_OnBlockBegin;
 			Abo.OnBlockEnd += Abo_OnBlockEnd;
 		}
 
 		private void Abo_OnBlockEnd(object sender, IScadaAboEvents_OnBlockEndEvent e) {
-			if (OnFinishRead != null)
+			if (AllSent && OnFinishRead != null)
 				OnFinishRead(Data);
 		}
 
@@ -42,7 +58,7 @@ namespace KotmiData
 			Data = new Dictionary<DateTime, double>();
 		}
 
-		private void Abo_OnRowValue1(object sender, IScadaAboEvents_OnRowValueEvent e) {
+		private void Abo_OnRowValue(object sender, IScadaAboEvents_OnRowValueEvent e) {
 			Object dt = e.recData.FieldValue["DT"];
 			Object dt2=Client.get_TimeSecToOle(Convert.ToInt32(dt));
 			DateTime date = Convert.ToDateTime(dt2);
@@ -70,27 +86,42 @@ namespace KotmiData
 			return Single.Client.CliActive;
 		}
 
-		public void ReadVals(DateTime dateStart, DateTime dateEnd,List<DateTime>sentData, int TI,int stepSeconds) {			
+		public void ReadVals(DateTime dateStart, DateTime dateEnd,List<DateTime>sentData, ArcField field,int stepSeconds) {			
 			if (Connect()) {
 				Data = new Dictionary<DateTime, double>();
-				
-				Abo.BlockBegin();				
+
+				bool needStart = true;
+
+				int cnt = 0;
 				DateTime date = dateStart.AddHours(0);
+				AllSent = false;
 				while (date <= dateEnd) {
+					if (needStart) {
+						Abo.BlockBegin();
+						needStart = false;
+					}
+					cnt++;
 					Abo.RequestPrmSet("PROC", "READ_ARCH");
-					Abo.RequestPrmSet("TABLE_NAME", "T_ARCH_TI");
+					Abo.RequestPrmSet("TABLE_NAME", field.PTI? "T_ARCH_PTI":"T_ARCH_TI");
 					Abo.Proc();
 
-					Abo.FieldValue("ID", ScdSys.EFieldType.eftInt, TI);
+					Abo.FieldValue("ID", ScdSys.EFieldType.eftInt, field.ID);
 					int time = Client.get_TimeOleToSec(date);
 					Abo.FieldValue("DT", ScdSys.EFieldType.eftUnixDT, time);
 					sentData.Add(date);
 					date = date.AddSeconds(stepSeconds);
-					Abo.Post();										
+					Abo.Post();				
+					
+					if (cnt == 100 ||date>dateEnd) {
+						AllSent = date >= dateEnd;
+						Abo.BlockEnd(true, true);
+						needStart = true;
+					}
 				}
 				
-				Abo.BlockEnd(true, true);
+				
 			}
+			
 		}
 
 		public Dictionary<DateTime,double> getFullData(Dictionary<DateTime,double> data,List<DateTime> sentData) {

@@ -16,9 +16,9 @@ namespace KotmiData
 	public partial class Form1 : Form
 	{
 		protected List<DateTime> sentData;
-		protected Dictionary<int, string> KotmiFields;
-		protected Dictionary<int, string> VisibleFields;
-		protected int currentTI = 0;
+		protected Dictionary<string, string> KotmiFields;
+		protected Dictionary<string, string> VisibleFields;
+		protected ArcField currentField = null;
 		protected int currentStep = 0;
 		public Form1() {
 			InitializeComponent();
@@ -43,11 +43,13 @@ namespace KotmiData
 			KotmiClass.Single.OnFinishRead += Single_OnFinishRead;
 			DTPEnd.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy HH:00"));
 			DTPStart.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy 00:00"));
-			KotmiFields = new Dictionary<int, string>();
-			VisibleFields = new Dictionary<int, string>();
+			KotmiFields = new Dictionary<string, string>();
+
+			VisibleFields = new Dictionary<string, string>();
 			foreach (string field in Settings.Single.KotmiFields) {
 				string[] data = field.Split('=');
-				int val = Convert.ToInt32(data[0]);
+				string[] codeArr = data[0].Split('_');
+				string val = data[0];				
 				string name = data[1];
 				KotmiFields.Add(val, String.Format("{0,-8} {1}",val,name));
 				VisibleFields.Add(val, String.Format("{0,-8} {1}", val, name));
@@ -117,11 +119,11 @@ namespace KotmiData
 		}
 
 		protected TabPage getPage(Dictionary<string, string> data,bool step) {
-			string name = "";
-			if (KotmiFields.ContainsKey(currentTI)) {
-				name = KotmiFields[currentTI];
+			string name = "";			
+			if (KotmiFields.ContainsKey(currentField.Code)) {
+				name = KotmiFields[currentField.Code];
 			} else {
-				name = currentTI.ToString();
+				name = currentField.Code;
 			}
 			DataGridView grid = new DataGridView();
 			grid.Font = new Font("Courier new", 8);			
@@ -147,19 +149,23 @@ namespace KotmiData
 		private void button1_Click(object sender, EventArgs e) {
 			if ((chbHH.Checked||chbStep.Checked)&&lbItems.SelectedIndex>0) {
 				sentData = new List<DateTime>();
-				int TI = Convert.ToInt32(txtTI.Text);
-				if (TI == 0) {
+				ArcField field = null;
+				try {
+					field = new ArcField(txtTI.Text);
+				} catch { }
+
+				if (field == null) {
 					try {
-						KeyValuePair<int, string> sel = (KeyValuePair<int, string>)lbItems.SelectedItem;
-						TI = sel.Key;
-					}catch (Exception ex) {
-						TI = 0;
-					}
+						KeyValuePair<string, string> sel = (KeyValuePair<string, string>)lbItems.SelectedItem;
+						field = new ArcField(sel.Key);
+					}catch (Exception ex) {	}
 				}
 				currentStep = Convert.ToInt32(txtStep.Text);
-				currentTI = TI;
+				currentField = field;
+				if (field == null)
+					return;
 				KotmiClass.Single.ReadVals(Convert.ToDateTime(DTPStart.Value.ToString("dd.MM.yyyy HH:mm")), Convert.ToDateTime(DTPEnd.Value.ToString("dd.MM.yyyy HH:mm")), 
-					sentData,currentTI,currentStep);
+					sentData,currentField,currentStep);
 			} else {
 				MessageBox.Show("Не удалось подключиться");
 			}
@@ -175,7 +181,7 @@ namespace KotmiData
 
 		private void textBox1_TextChanged(object sender, EventArgs e) {
 			VisibleFields.Clear();
-			foreach (KeyValuePair<int,string> de in KotmiFields) {
+			foreach (KeyValuePair<string,string> de in KotmiFields) {
 				if (de.Value.ToLower().Contains(textBox1.Text.ToLower())){
 					VisibleFields.Add(de.Key, de.Value);
 				}
@@ -186,14 +192,14 @@ namespace KotmiData
 		}
 
 		private void lbItems_SelectedIndexChanged(object sender, EventArgs e) {
-			int TI = 0;
+			ArcField field = null;
 			try {
-				KeyValuePair<int, string> sel = (KeyValuePair<int, string>)lbItems.SelectedItem;
-				TI = sel.Key;
+				KeyValuePair<string, string> sel = (KeyValuePair<string, string>)lbItems.SelectedItem;
+				field = new ArcField(sel.Key);
 			} catch (Exception ex) {
-				TI = 0;
 			}
-			txtTI.Text = TI.ToString();
+			txtTI.Text = field.Code;
 		}
+
 	}
 }
