@@ -25,6 +25,7 @@ namespace KotmiData
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 
 			Logger.init(Directory.GetCurrentDirectory().ToString()+"/logs", "log");
+			Logger.TxtLog = txtLog;
 			Logger.info("Старт приложения");
 			Settings.init(Application.StartupPath+"/Data/MainSettings.xml");
 
@@ -62,7 +63,8 @@ namespace KotmiData
 
 		
 
-		private void Single_OnFinishRead(Dictionary<DateTime, double> Data) {			
+		private void Single_OnFinishRead(SortedList<DateTime, double> Data) {
+			pnlLeft.Enabled = true;
 			Dictionary<string, string> DataStr = new Dictionary<string, string>();
 			Dictionary<string, string> HHDataStr = new Dictionary<string, string>();
 			Dictionary<DateTime, double> FullData = KotmiClass.Single.getFullData(Data, sentData);
@@ -147,7 +149,7 @@ namespace KotmiData
 		
 
 		private void button1_Click(object sender, EventArgs e) {
-			if ((chbHH.Checked||chbStep.Checked)&&lbItems.SelectedIndex>0) {
+			if ((chbHH.Checked||chbStep.Checked)&&lbItems.SelectedIndex>=0) {
 				sentData = new List<DateTime>();
 				ArcField field = null;
 				try {
@@ -164,6 +166,8 @@ namespace KotmiData
 				currentField = field;
 				if (field == null)
 					return;
+				pnlLeft.Enabled = false;
+				btnBreak.Enabled = true;
 				KotmiClass.Single.ReadVals(Convert.ToDateTime(DTPStart.Value.ToString("dd.MM.yyyy HH:mm")), Convert.ToDateTime(DTPEnd.Value.ToString("dd.MM.yyyy HH:mm")), 
 					sentData,currentField,currentStep);
 			} else {
@@ -201,5 +205,8 @@ namespace KotmiData
 			txtTI.Text = field.Code;
 		}
 
+		private void btnBreak_Click(object sender, EventArgs e) {
+			KotmiClass.BreakRead();
+		}
 	}
 }

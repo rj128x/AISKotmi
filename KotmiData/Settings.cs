@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace KotmiData
@@ -44,6 +45,7 @@ namespace KotmiData
 		public string Password { get; set; }
 		public List<String> KotmiFields { get; set; }
 		
+		
 		public static Settings Single { get; protected set; }
 		public static void init(string filename) {
 			try {
@@ -62,6 +64,7 @@ namespace KotmiData
 	{
 		public enum LoggerSource { server, client, ordersContext, objectsContext, usersContext, service }
 		public static log4net.ILog logger;
+		public static RichTextBox TxtLog { get; set; }
 		static Logger() {
 
 		}
@@ -78,7 +81,11 @@ namespace KotmiData
 		}
 
 		public static string createMessage(string message, LoggerSource source) {
-			return String.Format("{0,-20} {1}", source.ToString(), message);
+			string msg= String.Format("{0,-20} {1}", DateTime.Now.ToString(), message);
+			try {
+				TxtLog.Text = msg + "\r\n" + TxtLog.Text;
+			} catch { }
+			return msg;
 		}
 
 		public static void info(string str, LoggerSource source = LoggerSource.server) {

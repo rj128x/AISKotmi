@@ -25,11 +25,11 @@
 		/// содержимое этого метода с помощью редактора кода.
 		/// </summary>
 		private void InitializeComponent() {
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.panel4 = new System.Windows.Forms.Panel();
+			this.pnlLeft = new System.Windows.Forms.Panel();
+			this.pnlTI = new System.Windows.Forms.Panel();
+			this.pnlTIList = new System.Windows.Forms.Panel();
 			this.lbItems = new System.Windows.Forms.ListBox();
-			this.panel3 = new System.Windows.Forms.Panel();
+			this.pnlTIName = new System.Windows.Forms.Panel();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -37,52 +37,60 @@
 			this.chbHH = new System.Windows.Forms.CheckBox();
 			this.DTPStart = new System.Windows.Forms.DateTimePicker();
 			this.txtTI = new System.Windows.Forms.TextBox();
-			this.button1 = new System.Windows.Forms.Button();
+			this.btnShow = new System.Windows.Forms.Button();
 			this.txtStep = new System.Windows.Forms.TextBox();
 			this.DTPEnd = new System.Windows.Forms.DateTimePicker();
 			this.tcKotmiData = new System.Windows.Forms.TabControl();
-			this.panel1.SuspendLayout();
-			this.panel2.SuspendLayout();
-			this.panel4.SuspendLayout();
-			this.panel3.SuspendLayout();
+			this.pnlLog = new System.Windows.Forms.Panel();
+			this.pnlTop = new System.Windows.Forms.Panel();
+			this.txtLog = new System.Windows.Forms.RichTextBox();
+			this.pnlGrid = new System.Windows.Forms.Panel();
+			this.btnBreak = new System.Windows.Forms.Button();
+			this.pnlLeft.SuspendLayout();
+			this.pnlTI.SuspendLayout();
+			this.pnlTIList.SuspendLayout();
+			this.pnlTIName.SuspendLayout();
+			this.pnlLog.SuspendLayout();
+			this.pnlTop.SuspendLayout();
+			this.pnlGrid.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// panel1
+			// pnlLeft
 			// 
-			this.panel1.Controls.Add(this.panel2);
-			this.panel1.Controls.Add(this.label2);
-			this.panel1.Controls.Add(this.label1);
-			this.panel1.Controls.Add(this.chbStep);
-			this.panel1.Controls.Add(this.chbHH);
-			this.panel1.Controls.Add(this.DTPStart);
-			this.panel1.Controls.Add(this.txtTI);
-			this.panel1.Controls.Add(this.button1);
-			this.panel1.Controls.Add(this.txtStep);
-			this.panel1.Controls.Add(this.DTPEnd);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(442, 311);
-			this.panel1.TabIndex = 7;
+			this.pnlLeft.Controls.Add(this.pnlTI);
+			this.pnlLeft.Controls.Add(this.label2);
+			this.pnlLeft.Controls.Add(this.label1);
+			this.pnlLeft.Controls.Add(this.chbStep);
+			this.pnlLeft.Controls.Add(this.chbHH);
+			this.pnlLeft.Controls.Add(this.DTPStart);
+			this.pnlLeft.Controls.Add(this.txtTI);
+			this.pnlLeft.Controls.Add(this.btnShow);
+			this.pnlLeft.Controls.Add(this.txtStep);
+			this.pnlLeft.Controls.Add(this.DTPEnd);
+			this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+			this.pnlLeft.Location = new System.Drawing.Point(0, 0);
+			this.pnlLeft.Name = "pnlLeft";
+			this.pnlLeft.Size = new System.Drawing.Size(478, 429);
+			this.pnlLeft.TabIndex = 7;
 			// 
-			// panel2
+			// pnlTI
 			// 
-			this.panel2.Controls.Add(this.panel4);
-			this.panel2.Controls.Add(this.panel3);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panel2.Location = new System.Drawing.Point(152, 0);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(290, 311);
-			this.panel2.TabIndex = 10;
+			this.pnlTI.Controls.Add(this.pnlTIList);
+			this.pnlTI.Controls.Add(this.pnlTIName);
+			this.pnlTI.Dock = System.Windows.Forms.DockStyle.Right;
+			this.pnlTI.Location = new System.Drawing.Point(167, 0);
+			this.pnlTI.Name = "pnlTI";
+			this.pnlTI.Size = new System.Drawing.Size(311, 429);
+			this.pnlTI.TabIndex = 10;
 			// 
-			// panel4
+			// pnlTIList
 			// 
-			this.panel4.Controls.Add(this.lbItems);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(0, 25);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(290, 286);
-			this.panel4.TabIndex = 11;
+			this.pnlTIList.Controls.Add(this.lbItems);
+			this.pnlTIList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlTIList.Location = new System.Drawing.Point(0, 25);
+			this.pnlTIList.Name = "pnlTIList";
+			this.pnlTIList.Size = new System.Drawing.Size(311, 404);
+			this.pnlTIList.TabIndex = 11;
 			// 
 			// lbItems
 			// 
@@ -92,25 +100,25 @@
 			this.lbItems.ItemHeight = 14;
 			this.lbItems.Location = new System.Drawing.Point(0, 0);
 			this.lbItems.Name = "lbItems";
-			this.lbItems.Size = new System.Drawing.Size(290, 286);
+			this.lbItems.Size = new System.Drawing.Size(311, 404);
 			this.lbItems.TabIndex = 10;
 			this.lbItems.SelectedIndexChanged += new System.EventHandler(this.lbItems_SelectedIndexChanged);
 			// 
-			// panel3
+			// pnlTIName
 			// 
-			this.panel3.Controls.Add(this.textBox1);
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel3.Location = new System.Drawing.Point(0, 0);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(290, 25);
-			this.panel3.TabIndex = 10;
+			this.pnlTIName.Controls.Add(this.textBox1);
+			this.pnlTIName.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pnlTIName.Location = new System.Drawing.Point(0, 0);
+			this.pnlTIName.Name = "pnlTIName";
+			this.pnlTIName.Size = new System.Drawing.Size(311, 25);
+			this.pnlTIName.TabIndex = 10;
 			// 
 			// textBox1
 			// 
 			this.textBox1.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.textBox1.Location = new System.Drawing.Point(0, 2);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(290, 20);
+			this.textBox1.Size = new System.Drawing.Size(308, 20);
 			this.textBox1.TabIndex = 11;
 			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
 			// 
@@ -179,16 +187,16 @@
 			this.txtTI.TabIndex = 5;
 			this.txtTI.Text = "0";
 			// 
-			// button1
+			// btnShow
 			// 
-			this.button1.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.button1.Location = new System.Drawing.Point(32, 154);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 3;
-			this.button1.Text = "Show";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnShow.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.btnShow.Location = new System.Drawing.Point(32, 154);
+			this.btnShow.Name = "btnShow";
+			this.btnShow.Size = new System.Drawing.Size(75, 23);
+			this.btnShow.TabIndex = 3;
+			this.btnShow.Text = "Show";
+			this.btnShow.UseVisualStyleBackColor = true;
+			this.btnShow.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// txtStep
 			// 
@@ -214,49 +222,108 @@
 			// tcKotmiData
 			// 
 			this.tcKotmiData.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tcKotmiData.Location = new System.Drawing.Point(442, 0);
+			this.tcKotmiData.Location = new System.Drawing.Point(0, 0);
 			this.tcKotmiData.Name = "tcKotmiData";
 			this.tcKotmiData.SelectedIndex = 0;
-			this.tcKotmiData.Size = new System.Drawing.Size(644, 311);
+			this.tcKotmiData.Size = new System.Drawing.Size(680, 429);
 			this.tcKotmiData.TabIndex = 8;
 			this.tcKotmiData.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tcKotmiData_MouseDoubleClick);
+			// 
+			// pnlLog
+			// 
+			this.pnlLog.Controls.Add(this.btnBreak);
+			this.pnlLog.Controls.Add(this.txtLog);
+			this.pnlLog.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.pnlLog.Location = new System.Drawing.Point(0, 429);
+			this.pnlLog.Name = "pnlLog";
+			this.pnlLog.Size = new System.Drawing.Size(1158, 174);
+			this.pnlLog.TabIndex = 9;
+			// 
+			// pnlTop
+			// 
+			this.pnlTop.Controls.Add(this.pnlGrid);
+			this.pnlTop.Controls.Add(this.pnlLeft);
+			this.pnlTop.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlTop.Location = new System.Drawing.Point(0, 0);
+			this.pnlTop.Name = "pnlTop";
+			this.pnlTop.Size = new System.Drawing.Size(1158, 429);
+			this.pnlTop.TabIndex = 10;
+			// 
+			// txtLog
+			// 
+			this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.txtLog.EnableAutoDragDrop = true;
+			this.txtLog.Font = new System.Drawing.Font("Courier New", 8.25F);
+			this.txtLog.Location = new System.Drawing.Point(0, 0);
+			this.txtLog.Name = "txtLog";
+			this.txtLog.Size = new System.Drawing.Size(1158, 174);
+			this.txtLog.TabIndex = 0;
+			this.txtLog.Text = "";
+			// 
+			// pnlGrid
+			// 
+			this.pnlGrid.Controls.Add(this.tcKotmiData);
+			this.pnlGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlGrid.Location = new System.Drawing.Point(478, 0);
+			this.pnlGrid.Name = "pnlGrid";
+			this.pnlGrid.Size = new System.Drawing.Size(680, 429);
+			this.pnlGrid.TabIndex = 9;
+			// 
+			// btnBreak
+			// 
+			this.btnBreak.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.btnBreak.Location = new System.Drawing.Point(1059, 6);
+			this.btnBreak.Name = "btnBreak";
+			this.btnBreak.Size = new System.Drawing.Size(75, 23);
+			this.btnBreak.TabIndex = 3;
+			this.btnBreak.Text = "Break";
+			this.btnBreak.UseVisualStyleBackColor = true;
+			this.btnBreak.Click += new System.EventHandler(this.btnBreak_Click);
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1086, 311);
-			this.Controls.Add(this.tcKotmiData);
-			this.Controls.Add(this.panel1);
+			this.ClientSize = new System.Drawing.Size(1158, 603);
+			this.Controls.Add(this.pnlTop);
+			this.Controls.Add(this.pnlLog);
 			this.Name = "Form1";
 			this.Text = "Form1";
-			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
-			this.panel2.ResumeLayout(false);
-			this.panel4.ResumeLayout(false);
-			this.panel3.ResumeLayout(false);
-			this.panel3.PerformLayout();
+			this.pnlLeft.ResumeLayout(false);
+			this.pnlLeft.PerformLayout();
+			this.pnlTI.ResumeLayout(false);
+			this.pnlTIList.ResumeLayout(false);
+			this.pnlTIName.ResumeLayout(false);
+			this.pnlTIName.PerformLayout();
+			this.pnlLog.ResumeLayout(false);
+			this.pnlTop.ResumeLayout(false);
+			this.pnlGrid.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
-		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Panel pnlLeft;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.CheckBox chbStep;
 		private System.Windows.Forms.CheckBox chbHH;
 		private System.Windows.Forms.DateTimePicker DTPStart;
 		private System.Windows.Forms.TextBox txtTI;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnShow;
 		private System.Windows.Forms.TextBox txtStep;
 		private System.Windows.Forms.DateTimePicker DTPEnd;
 		private System.Windows.Forms.TabControl tcKotmiData;
-		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Panel panel4;
+		private System.Windows.Forms.Panel pnlTI;
+		private System.Windows.Forms.Panel pnlTIList;
 		private System.Windows.Forms.ListBox lbItems;
-		private System.Windows.Forms.Panel panel3;
+		private System.Windows.Forms.Panel pnlTIName;
 		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.Panel pnlLog;
+		private System.Windows.Forms.RichTextBox txtLog;
+		private System.Windows.Forms.Panel pnlTop;
+		private System.Windows.Forms.Panel pnlGrid;
+		private System.Windows.Forms.Button btnBreak;
 	}
 }
 

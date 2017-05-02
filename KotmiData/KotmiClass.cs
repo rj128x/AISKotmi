@@ -22,14 +22,15 @@ namespace KotmiData
 	}
 
 
-	public delegate void OnFinishReadDelegate(Dictionary<DateTime, double> Data);
+	public delegate void OnFinishReadDelegate(SortedList<DateTime, double> Data);
 	public class KotmiClass
 	{
 		public AxScadaCli Client { get; protected set; }
 		public AxScadaAbo Abo { get; set; }
-		public Dictionary<DateTime, double> Data;
+		public SortedList<DateTime, double> Data;
 		public event OnFinishReadDelegate OnFinishRead;
-		public bool AllSent = false;
+		protected bool AllSent = false;
+		protected bool Break = false;
 		
 		public static KotmiClass Single { get; protected set; }
 
@@ -50,12 +51,15 @@ namespace KotmiData
 		}
 
 		private void Abo_OnBlockEnd(object sender, IScadaAboEvents_OnBlockEndEvent e) {
-			if (AllSent && OnFinishRead != null)
+			Logger.info("Завершение блока");
+			if ((Break||AllSent) && OnFinishRead != null) {
+				Logger.info("Завершение запроса");
 				OnFinishRead(Data);
+			}
 		}
 
 		private void Abo_OnBlockBegin(object sender, EventArgs e) {
-			Data = new Dictionary<DateTime, double>();
+			
 		}
 
 		private void Abo_OnRowValue(object sender, IScadaAboEvents_OnRowValueEvent e) {
@@ -88,15 +92,19 @@ namespace KotmiData
 
 		public void ReadVals(DateTime dateStart, DateTime dateEnd,List<DateTime>sentData, ArcField field,int stepSeconds) {			
 			if (Connect()) {
-				Data = new Dictionary<DateTime, double>();
+				Break = false;
+				Data = new SortedList<DateTime, double>();
 
 				bool needStart = true;
+				AllSent = false;
 
 				int cnt = 0;
 				DateTime date = dateStart.AddHours(0);
-				AllSent = false;
-				while (date <= dateEnd) {
+				
+				while (date <= dateEnd && !Break) {
+
 					if (needStart) {
+						Logger.info(String.Format("Старт блока дата {0}", date));
 						Abo.BlockBegin();
 						needStart = false;
 					}
@@ -112,8 +120,10 @@ namespace KotmiData
 					date = date.AddSeconds(stepSeconds);
 					Abo.Post();				
 					
-					if (cnt == 100 ||date>dateEnd) {
+					if (Break||cnt == 100 ||date>dateEnd) {
 						AllSent = date >= dateEnd;
+						cnt = 0;
+						Logger.info(String.Format("Отправка запроса по измерению {0} до даты {1}", field.Code, date));
 						Abo.BlockEnd(true, true);
 						needStart = true;
 					}
@@ -124,17 +134,22 @@ namespace KotmiData
 			
 		}
 
-		public Dictionary<DateTime,double> getFullData(Dictionary<DateTime,double> data,List<DateTime> sentData) {
+		public Dictionary<DateTime,double> getFullData(SortedList<DateTime,double> data,List<DateTime> sentData) {
+			//Logger.info(String.Format("Обработка входного массива дат: \r\n Отправлены: {0} \r\n Получены: {1}", String.Join(" , ", sentData), String.Join(" , ", data.Keys)));
 			Dictionary<DateTime, double> resDT = new Dictionary<DateTime, double>();
+			List<DateTime> missedDates = new List<DateTime>();
 			foreach (DateTime date in sentData) {
 				try {
 					//resDT.Add(date, 0);
 					DateTime dt1 = data.Keys.Last(d => d <= date);
 					resDT.Add(date, data[dt1]);
 				}catch (Exception e) {
-					Logger.info("Ошибка при получении данных КОТМИ " + e.ToString());
+					//Logger.info(String.Format("Ошибка при обработке данных КОТМИ нет даты {0}: {1} " ,date,e.ToString()));
+					missedDates.Add(date);
+					resDT.Add(date, double.NaN);
 				}
 			}
+			Logger.info("Пропущены даты: " + string.Join(", ", missedDates));
 			return resDT;
 		}
 
@@ -144,6 +159,11 @@ namespace KotmiData
 			} catch  {
 
 			}
+		}
+
+		public static void BreakRead() {
+			Logger.info("Прерывание запроса");
+			Single.Break = true;
 		}
 
 	}
