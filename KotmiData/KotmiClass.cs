@@ -64,7 +64,7 @@ namespace KotmiData
 			double val= Convert.ToDouble(e.recData.FieldValue["VAL"]);
 			if (!Data.ContainsKey(date)) {
 				Data.Add(date, val);
-			}
+			} 
 		}
 
 		protected bool _Connect() {
