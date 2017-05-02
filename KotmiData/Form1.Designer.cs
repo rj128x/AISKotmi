@@ -46,6 +46,8 @@
 			this.txtLog = new System.Windows.Forms.RichTextBox();
 			this.pnlGrid = new System.Windows.Forms.Panel();
 			this.btnBreak = new System.Windows.Forms.Button();
+			this.chbNegPos = new System.Windows.Forms.CheckBox();
+			this.chbMinMax = new System.Windows.Forms.CheckBox();
 			this.pnlLeft.SuspendLayout();
 			this.pnlTI.SuspendLayout();
 			this.pnlTIList.SuspendLayout();
@@ -60,6 +62,8 @@
 			this.pnlLeft.Controls.Add(this.pnlTI);
 			this.pnlLeft.Controls.Add(this.label2);
 			this.pnlLeft.Controls.Add(this.label1);
+			this.pnlLeft.Controls.Add(this.chbMinMax);
+			this.pnlLeft.Controls.Add(this.chbNegPos);
 			this.pnlLeft.Controls.Add(this.chbStep);
 			this.pnlLeft.Controls.Add(this.chbHH);
 			this.pnlLeft.Controls.Add(this.DTPStart);
@@ -159,7 +163,7 @@
 			this.chbHH.Checked = true;
 			this.chbHH.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chbHH.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.chbHH.Location = new System.Drawing.Point(11, 130);
+			this.chbHH.Location = new System.Drawing.Point(7, 130);
 			this.chbHH.Name = "chbHH";
 			this.chbHH.Size = new System.Drawing.Size(40, 18);
 			this.chbHH.TabIndex = 6;
@@ -190,7 +194,7 @@
 			// btnShow
 			// 
 			this.btnShow.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.btnShow.Location = new System.Drawing.Point(32, 154);
+			this.btnShow.Location = new System.Drawing.Point(40, 196);
 			this.btnShow.Name = "btnShow";
 			this.btnShow.Size = new System.Drawing.Size(75, 23);
 			this.btnShow.TabIndex = 3;
@@ -280,6 +284,28 @@
 			this.btnBreak.UseVisualStyleBackColor = true;
 			this.btnBreak.Click += new System.EventHandler(this.btnBreak_Click);
 			// 
+			// chbNegPos
+			// 
+			this.chbNegPos.AutoSize = true;
+			this.chbNegPos.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.chbNegPos.Location = new System.Drawing.Point(6, 151);
+			this.chbNegPos.Name = "chbNegPos";
+			this.chbNegPos.Size = new System.Drawing.Size(75, 18);
+			this.chbNegPos.TabIndex = 6;
+			this.chbNegPos.Text = "Neg/Pos";
+			this.chbNegPos.UseVisualStyleBackColor = true;
+			// 
+			// chbMinMax
+			// 
+			this.chbMinMax.AutoSize = true;
+			this.chbMinMax.Font = new System.Drawing.Font("Courier New", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.chbMinMax.Location = new System.Drawing.Point(6, 172);
+			this.chbMinMax.Name = "chbMinMax";
+			this.chbMinMax.Size = new System.Drawing.Size(75, 18);
+			this.chbMinMax.TabIndex = 6;
+			this.chbMinMax.Text = "Min/Max";
+			this.chbMinMax.UseVisualStyleBackColor = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -324,6 +350,8 @@
 		private System.Windows.Forms.Panel pnlTop;
 		private System.Windows.Forms.Panel pnlGrid;
 		private System.Windows.Forms.Button btnBreak;
+		private System.Windows.Forms.CheckBox chbNegPos;
+		private System.Windows.Forms.CheckBox chbMinMax;
 	}
 }
 

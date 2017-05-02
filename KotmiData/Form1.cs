@@ -75,6 +75,8 @@ namespace KotmiData
 			double sumHHMinus = 0;
 			double cntHHPlus = 1;
 			double cntHHMinus = 1;
+			double min = double.MaxValue;
+			double max = double.MinValue;
 			foreach (DateTime date in FullData.Keys) {
 				double val = FullData[date];
 				DataStr.Add(date.ToString("dd.MM.yyyy HH:mm:ss"), String.Format("{0:0.000}",val));
@@ -89,8 +91,18 @@ namespace KotmiData
 					cntHHMinus++;
 				}
 
+				if (val < min)
+					min = val;
+				if (val > max)
+					max = val;
+
 				if (date.Second==0 && (date.Minute==0 || date.Minute == 30)) {
-					HHDataStr.Add(date.ToString("dd.MM.yyyy HH:mm:ss"), String.Format("{0,15:0.000}{1,15:0.000}{2,15:0.000}", sumHH / cntHH, sumHHPlus/cntHH, sumHHMinus/cntHH));
+					string str = String.Format("{0,15:0.000}", sumHH / cntHH);
+					if (chbNegPos.Checked)
+						str += String.Format("{0,15:0.000}{1,15:0.000}",  sumHHPlus / cntHH, sumHHMinus / cntHH);
+					if (chbMinMax.Checked)
+						str += String.Format("{0,15:0.000}{1,15:0.000}", min, max);
+					HHDataStr.Add(date.ToString("dd.MM.yyyy HH:mm:ss"), str);
 					sumHH = 0;
 					sumHHPlus = 0;
 					sumHHMinus = 0;
@@ -142,7 +154,12 @@ namespace KotmiData
 			grid.Columns[0].Width = 150;
 			grid.Columns[1].Width = 400;
 			if (!step) {
-				grid.Columns[1].HeaderText = String.Format("{0,15}{1,15}{2,15}", "AVG", "PosAVG", "NegAVG");
+				string header= String.Format("{0,15}", "AVG"); 
+				if (chbNegPos.Checked)
+					header+=  String.Format("{0,15}{1,15}",  "PosAVG", "NegAVG");
+				if (chbMinMax.Checked)
+					header+= String.Format("{0,15}{1,15}", "Min", "Max");
+				grid.Columns[1].HeaderText = header;
 			}
 			return page;
 		}
@@ -170,9 +187,7 @@ namespace KotmiData
 				btnBreak.Enabled = true;
 				KotmiClass.Single.ReadVals(Convert.ToDateTime(DTPStart.Value.ToString("dd.MM.yyyy HH:mm")), Convert.ToDateTime(DTPEnd.Value.ToString("dd.MM.yyyy HH:mm")), 
 					sentData,currentField,currentStep);
-			} else {
-				MessageBox.Show("Не удалось подключиться");
-			}
+			} 
 		}
 
 		private void tcKotmiData_MouseDoubleClick(object sender, MouseEventArgs e) {

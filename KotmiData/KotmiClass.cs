@@ -46,7 +46,6 @@ namespace KotmiData
 
 		protected void init() {
 			Abo.OnRowValue += Abo_OnRowValue;
-			Abo.OnBlockBegin += Abo_OnBlockBegin;
 			Abo.OnBlockEnd += Abo_OnBlockEnd;
 		}
 
@@ -56,10 +55,6 @@ namespace KotmiData
 				Logger.info("Завершение запроса");
 				OnFinishRead(Data);
 			}
-		}
-
-		private void Abo_OnBlockBegin(object sender, EventArgs e) {
-			
 		}
 
 		private void Abo_OnRowValue(object sender, IScadaAboEvents_OnRowValueEvent e) {
@@ -100,11 +95,13 @@ namespace KotmiData
 
 				int cnt = 0;
 				DateTime date = dateStart.AddHours(0);
-				
-				while (date <= dateEnd && !Break) {
+				DateTime dateS = date.AddHours(0);
+
+				while (date <= dateEnd && !Break&&!AllSent) {
 
 					if (needStart) {
-						Logger.info(String.Format("Старт блока дата {0}", date));
+						dateS = date.AddHours(0);
+						Logger.info(String.Format("Старт блока дата [{0}]",date));
 						Abo.BlockBegin();
 						needStart = false;
 					}
@@ -120,12 +117,13 @@ namespace KotmiData
 					date = date.AddSeconds(stepSeconds);
 					Abo.Post();				
 					
-					if (Break||cnt == 100 ||date>dateEnd) {
+					if (Break||cnt == 1000 ||date>dateEnd) {
 						AllSent = date >= dateEnd;
 						cnt = 0;
-						Logger.info(String.Format("Отправка запроса по измерению {0} до даты {1}", field.Code, date));
-						Abo.BlockEnd(true, true);
 						needStart = true;
+						Logger.info(String.Format("Отправка запроса по измерению {0} [{1}]-[{2}]", field.Code, dateS,date));
+						Abo.BlockEnd(true, true);
+						
 					}
 				}
 				
