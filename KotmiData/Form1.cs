@@ -67,7 +67,7 @@ namespace KotmiData
 			pnlLeft.Enabled = true;
 			Dictionary<string, string> DataStr = new Dictionary<string, string>();
 			Dictionary<string, string> HHDataStr = new Dictionary<string, string>();
-			Dictionary<DateTime, double> FullData = KotmiClass.Single.getFullData(Data, sentData);
+			SortedList<DateTime, double> FullData = Data;
 			double sum = 0;
 			double sumHH = 0;
 			double cntHH = 0;
@@ -167,7 +167,6 @@ namespace KotmiData
 
 		private void button1_Click(object sender, EventArgs e) {
 			if ((chbHH.Checked||chbStep.Checked)&&lbItems.SelectedIndex>=0) {
-				sentData = new List<DateTime>();
 				ArcField field = null;
 				try {
 					field = new ArcField(txtTI.Text);
@@ -186,7 +185,7 @@ namespace KotmiData
 				pnlLeft.Enabled = false;
 				btnBreak.Enabled = true;
 				KotmiClass.Single.ReadVals(Convert.ToDateTime(DTPStart.Value.ToString("dd.MM.yyyy HH:mm")), Convert.ToDateTime(DTPEnd.Value.ToString("dd.MM.yyyy HH:mm")), 
-					sentData,currentField,currentStep);
+					currentField,currentStep);
 			} 
 		}
 

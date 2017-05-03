@@ -27,11 +27,14 @@ namespace KotmiData
 	{
 		public AxScadaCli Client { get; protected set; }
 		public AxScadaAbo Abo { get; set; }
-		public SortedList<DateTime, double> Data;
+		protected SortedList<DateTime, double> Data;
+		protected SortedList<DateTime, double> TempData;
+		protected List<DateTime> SentData;
+		public SortedList<DateTime, double> FullData;		
 		public event OnFinishReadDelegate OnFinishRead;
 		protected bool AllSent = false;
 		protected bool Break = false;
-		
+
 		public static KotmiClass Single { get; protected set; }
 
 		protected KotmiClass() { }
@@ -47,24 +50,31 @@ namespace KotmiData
 		protected void init() {
 			Abo.OnRowValue += Abo_OnRowValue;
 			Abo.OnBlockEnd += Abo_OnBlockEnd;
+			Abo.OnBlockBegin += Abo_OnBlockBegin;
+		}
+
+		private void Abo_OnBlockBegin(object sender, EventArgs e) {
+			
 		}
 
 		private void Abo_OnBlockEnd(object sender, IScadaAboEvents_OnBlockEndEvent e) {
 			Logger.info("Завершение блока");
-			if ((Break||AllSent) && OnFinishRead != null) {
+			processFullData();
+
+			if ((Break || AllSent) && OnFinishRead != null) {
 				Logger.info("Завершение запроса");
-				OnFinishRead(Data);
+				OnFinishRead(FullData);
 			}
 		}
 
 		private void Abo_OnRowValue(object sender, IScadaAboEvents_OnRowValueEvent e) {
 			Object dt = e.recData.FieldValue["DT"];
-			Object dt2=Client.get_TimeSecToOle(Convert.ToInt32(dt));
+			Object dt2 = Client.get_TimeSecToOle(Convert.ToInt32(dt));
 			DateTime date = Convert.ToDateTime(dt2);
-			double val= Convert.ToDouble(e.recData.FieldValue["VAL"]);
-			if (!Data.ContainsKey(date)) {
-				Data.Add(date, val);
-			} 
+			double val = Convert.ToDouble(e.recData.FieldValue["VAL"]);
+			if (!TempData.ContainsKey(date)) {
+				TempData.Add(date, val);
+			}
 		}
 
 		protected bool _Connect() {
@@ -85,11 +95,11 @@ namespace KotmiData
 			return Single.Client.CliActive;
 		}
 
-		public void ReadVals(DateTime dateStart, DateTime dateEnd,List<DateTime>sentData, ArcField field,int stepSeconds) {			
+		public void ReadVals(DateTime dateStart, DateTime dateEnd, ArcField field, int stepSeconds) {
 			if (Connect()) {
 				Break = false;
 				Data = new SortedList<DateTime, double>();
-
+				FullData = new SortedList<DateTime, double>();
 				bool needStart = true;
 				AllSent = false;
 
@@ -97,64 +107,58 @@ namespace KotmiData
 				DateTime date = dateStart.AddHours(0);
 				DateTime dateS = date.AddHours(0);
 
-				while (date <= dateEnd && !Break&&!AllSent) {
-
+				while (date <= dateEnd && !Break && !AllSent) {
 					if (needStart) {
 						dateS = date.AddHours(0);
-						Logger.info(String.Format("Старт блока дата [{0}]",date));
+						Logger.info(String.Format("Старт блока дата [{0}]", date));
 						Abo.BlockBegin();
+						TempData = new SortedList<DateTime, double>();
+						SentData = new List<DateTime>();
 						needStart = false;
 					}
 					cnt++;
 					Abo.RequestPrmSet("PROC", "READ_ARCH");
-					Abo.RequestPrmSet("TABLE_NAME", field.PTI? "T_ARCH_PTI":"T_ARCH_TI");
+					Abo.RequestPrmSet("TABLE_NAME", field.PTI ? "T_ARCH_PTI" : "T_ARCH_TI");
 					Abo.Proc();
 
 					Abo.FieldValue("ID", ScdSys.EFieldType.eftInt, field.ID);
 					int time = Client.get_TimeOleToSec(date);
 					Abo.FieldValue("DT", ScdSys.EFieldType.eftUnixDT, time);
-					sentData.Add(date);
+					SentData.Add(date);
 					date = date.AddSeconds(stepSeconds);
-					Abo.Post();				
-					
-					if (Break||cnt == 1000 ||date>dateEnd) {
+					Abo.Post();
+
+					if (Break || cnt == 1000 || date > dateEnd) {
 						AllSent = date >= dateEnd;
 						cnt = 0;
 						needStart = true;
-						Logger.info(String.Format("Отправка запроса по измерению {0} [{1}]-[{2}]", field.Code, dateS,date));
+						Logger.info(String.Format("Отправка запроса по измерению {0} [{1}]-[{2}]", field.Code, dateS, date));
 						Abo.BlockEnd(true, true);
-						
 					}
 				}
-				
-				
 			}
-			
 		}
 
-		public Dictionary<DateTime,double> getFullData(SortedList<DateTime,double> data,List<DateTime> sentData) {
-			//Logger.info(String.Format("Обработка входного массива дат: \r\n Отправлены: {0} \r\n Получены: {1}", String.Join(" , ", sentData), String.Join(" , ", data.Keys)));
-			Dictionary<DateTime, double> resDT = new Dictionary<DateTime, double>();
+		protected void processFullData() {
 			List<DateTime> missedDates = new List<DateTime>();
-			foreach (DateTime date in sentData) {
+			foreach (DateTime date in SentData) {
 				try {
-					//resDT.Add(date, 0);
-					DateTime dt1 = data.Keys.Last(d => d <= date);
-					resDT.Add(date, data[dt1]);
-				}catch (Exception e) {
-					//Logger.info(String.Format("Ошибка при обработке данных КОТМИ нет даты {0}: {1} " ,date,e.ToString()));
+					DateTime dt1 = TempData.Keys.Last(d => d <= date);
+					FullData.Add(date, TempData[dt1]);
+				} catch (Exception e) {
 					missedDates.Add(date);
-					resDT.Add(date, double.NaN);
+					FullData.Add(date, double.NaN);
 				}
 			}
-			Logger.info("Пропущены даты: " + string.Join(", ", missedDates));
-			return resDT;
+			if (missedDates.Count > 0) {
+				Logger.info("Пропущены даты: " + string.Join(", ", missedDates));
+			}
 		}
 
 		public static void Close() {
 			try {
 				Single.Client.Close();
-			} catch  {
+			} catch {
 
 			}
 		}
