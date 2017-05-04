@@ -23,42 +23,44 @@ namespace KotmiData
 		public Form1() {
 			InitializeComponent();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+			try {
+				Logger.init(Directory.GetCurrentDirectory().ToString() + "/logs", "log");
+				Logger.TxtLog = txtLog;
+				Logger.info("Старт приложения");
+				Settings.init(Application.StartupPath + "/Data/MainSettings.xml");
 
-			Logger.init(Directory.GetCurrentDirectory().ToString()+"/logs", "log");
-			Logger.TxtLog = txtLog;
-			Logger.info("Старт приложения");
-			Settings.init(Application.StartupPath+"/Data/MainSettings.xml");
+				AxScadaCli cli = new AxScadaCli();
+				AxScadaAbo abo = new AxScadaAbo();
+				((System.ComponentModel.ISupportInitialize)(cli)).BeginInit();
+				((System.ComponentModel.ISupportInitialize)(abo)).BeginInit();
+				cli.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("cli.OcxState")));
+				abo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("abo.OcxState")));
+				this.Controls.Add(cli);
+				this.Controls.Add(abo);
+				((System.ComponentModel.ISupportInitialize)(cli)).EndInit();
+				((System.ComponentModel.ISupportInitialize)(abo)).EndInit();
 
-			AxScadaCli cli = new AxScadaCli();
-			AxScadaAbo abo = new AxScadaAbo();
-			((System.ComponentModel.ISupportInitialize)(cli)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(abo)).BeginInit();
-			cli.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("cli.OcxState")));
-			abo.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("abo.OcxState")));
-			this.Controls.Add(cli);
-			this.Controls.Add(abo);
-			((System.ComponentModel.ISupportInitialize)(cli)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(abo)).EndInit();
+				KotmiClass.init(cli, abo);
+				KotmiClass.Single.OnFinishRead += Single_OnFinishRead;
+				DTPEnd.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy HH:00"));
+				DTPStart.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy 00:00"));
+				KotmiFields = new Dictionary<string, string>();
 
-			KotmiClass.init(cli,abo);
-			KotmiClass.Single.OnFinishRead += Single_OnFinishRead;
-			DTPEnd.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy HH:00"));
-			DTPStart.Value = Convert.ToDateTime(DateTime.Now.ToString("dd.MM.yyyy 00:00"));
-			KotmiFields = new Dictionary<string, string>();
-
-			VisibleFields = new Dictionary<string, string>();
-			foreach (string field in Settings.Single.KotmiFields) {
-				string[] data = field.Split('=');
-				string[] codeArr = data[0].Split('_');
-				string val = data[0];				
-				string name = data[1];
-				KotmiFields.Add(val, String.Format("{0,-8} {1}",val,name));
-				VisibleFields.Add(val, String.Format("{0,-8} {1}", val, name));
+				VisibleFields = new Dictionary<string, string>();
+				foreach (string field in Settings.Single.KotmiFields) {
+					string[] data = field.Split('=');
+					string[] codeArr = data[0].Split('_');
+					string val = data[0];
+					string name = data[1];
+					KotmiFields.Add(val, String.Format("{0,-8} {1}", val, name));
+					VisibleFields.Add(val, String.Format("{0,-8} {1}", val, name));
+				}
+				lbItems.DataSource = new BindingSource(VisibleFields, null);
+				lbItems.DisplayMember = "Value";
+				lbItems.ValueMember = "Key";
+			}catch (Exception e) {
+				Logger.info(e.ToString());
 			}
-			lbItems.DataSource = new BindingSource(VisibleFields,null);
-			lbItems.DisplayMember = "Value";
-			lbItems.ValueMember = "Key";
-			
 		}
 
 		
