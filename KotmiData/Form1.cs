@@ -213,9 +213,10 @@ namespace KotmiData
 			try {
 				KeyValuePair<string, string> sel = (KeyValuePair<string, string>)lbItems.SelectedItem;
 				field = new ArcField(sel.Key);
+				txtTI.Text = field.Code;
 			} catch (Exception ex) {
 			}
-			txtTI.Text = field.Code;
+			
 		}
 
 		private void btnBreak_Click(object sender, EventArgs e) {

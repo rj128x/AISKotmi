@@ -31,15 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxScdSys">
+    <Reference Include="AxScdSys, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>C:\DiscD\Projects\AISKotmi\AISKotmi\libs\AxScdSys.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>C:\DiscD\Projects\AISKotmi\AISKotmi\libs\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="ScdSys">
+    <Reference Include="ScdSys, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>C:\DiscD\Projects\AISKotmi\AISKotmi\libs\ScdSys.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,6 +55,16 @@
     <Compile Include="KotmiClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\MainSettings - Копировать.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\MainSettings.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

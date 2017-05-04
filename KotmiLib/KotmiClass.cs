@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AxScdSys;
 using log4net.Repository.Hierarchy;
+using System.Threading;
 
 namespace KotmiLib
 {
@@ -40,6 +41,8 @@ namespace KotmiLib
 		public static KotmiClass Single { get; protected set; }
 
 		protected KotmiClass() {
+			
+
 			Form Form1 = new Form();
 			//System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KotmiClass));
 			AxScadaCli cli = new AxScadaCli();
