@@ -82,9 +82,8 @@ namespace KotmiLib
 
 		public static string createMessage(string message, LoggerSource source) {
 			string msg= String.Format("{0,-20} {1}", DateTime.Now.ToString(), message);
-			try {
+			if (TxtLog!=null)
 				TxtLog.Text = msg + "\r\n" + TxtLog.Text;
-			} catch { }
 			return msg;
 		}
 
