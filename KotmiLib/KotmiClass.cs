@@ -34,7 +34,7 @@ namespace KotmiLib
 		protected SortedList<DateTime, double> TempData;
 		protected List<DateTime> SentData;
 		public SortedList<DateTime, double> FullData;
-		public event OnFinishReadDelegate OnFinishRead;
+		public OnFinishReadDelegate OnFinishRead;
 		protected bool AllSent = false;
 		protected bool Break = false;
 
@@ -102,6 +102,7 @@ namespace KotmiLib
 			Client.SrvAddress = Settings.Single.Server;
 			Client.UserName = Settings.Single.User;
 			Client.UserPassword = Settings.Single.Password;
+			Client.ReconnectAuto = true;
 			Client.Open();
 			return Client.CliActive;
 		}
@@ -149,7 +150,7 @@ namespace KotmiLib
 					date = date.AddSeconds(stepSeconds);
 					Abo.Post();
 
-					if (Break || cnt == 1000 || date > dateEnd) {
+					if (Break || cnt == 10000 || date > dateEnd) {
 						AllSent = date >= dateEnd;
 						cnt = 0;
 						needStart = true;

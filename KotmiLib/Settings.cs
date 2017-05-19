@@ -44,8 +44,12 @@ namespace KotmiLib
 		public String User { get; set; }
 		public string Password { get; set; }
 		public List<String> KotmiFields { get; set; }
-		
-		
+		public String DBServer { get; set; }
+		public String DBName { get; set; }
+		public String DBUser { get; set; }
+		public String DBPassword { get; set; }
+
+
 		public static Settings Single { get; protected set; }
 		public static void init(string filename) {
 			try {
@@ -84,6 +88,9 @@ namespace KotmiLib
 			string msg= String.Format("{0,-20} {1}", DateTime.Now.ToString(), message);
 			if (TxtLog!=null)
 				TxtLog.Text = msg + "\r\n" + TxtLog.Text;
+			try {
+				Console.WriteLine(msg);
+			} catch { }
 			return msg;
 		}
 
