@@ -21,7 +21,7 @@ namespace KotmiCNSL
 			if (args.Count() > 0) {
 				string com = args[0];
 				switch (com) {
-					case "avrchm":
+					case "avrchm": 
 						int dayStart = Int32.Parse(args[1]);
 						int dayEnd = Int32.Parse(args[2]);
 						Logger.info("Получение АВРЧМ ");
