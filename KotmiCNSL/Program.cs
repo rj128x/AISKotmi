@@ -30,7 +30,7 @@ namespace KotmiCNSL
 				}
 			}
 		}
-
+		 
 		public static void readAVRCHM(DateTime dateStart,DateTime dateEnd) {
 			Logger.info(String.Format("{0} {1}", dateStart, dateEnd));
 
