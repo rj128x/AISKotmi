@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Server>192.168.145.200</Server>
+  <User>sa</User>
+  <Password>Piramida2000</Password>
+  <DBName>Piramida2000</DBName>
+  <SMTPServer>mx-votges-021.corp.gidroogk.com</SMTPServer>
+  <SMTPUser>is</SMTPUser>
+  <SMTPPassword>12345</SMTPPassword>
+  <SMTPDomain>CORP</SMTPDomain>
+  <SMTPFrom>is@votges.rushydro.ru</SMTPFrom>
+  <SMTPTo>chekunovaMV@votges.rushydro.ru</SMTPTo>
+  <SMTPPort>25</SMTPPort>
+  <Sources>
+    <string>ГГ=4462,4386,4456,4466,4459,4469,4379,4376,4412,4382</string>
+    <string>ГГ Возб=4465,4388,4458,4468,4461,4471,4381,4378,4414,4385</string>    
+    <string>ГГ СН=4463,4457,4467,4460,4470,4380,4377,4413,4383,4387</string>
+    <string>КЛ6=4401,4415,4442,4399</string>
+    <string>ВЛ110=4441,4436,4435,4434,4438,4439,4431,4433,4437,4440</string>
+    <string>ВЛ220=4392,4393,4390,4391,4389</string>
+    <string>ВЛ500=4371,4369,4370,4373,4372</string>
+    <string>ГТ=4394,4374,4395,4375,4430,4397</string>
+    <string>СН=4445,4404,4452,4425,4453,4426,4409,4454,4410,4427,4418,4407,4420,4429,4447,4403,4406,4424,4451,4411,4443,4417,4402,4423,4446,4405,4444,4408,4449,4422,4450,4421,4396,4455,4428,4398,4419</string>
+    <string>Потребители=0</string>
+  </Sources>
+
+</Settings>
