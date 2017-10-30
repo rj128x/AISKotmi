@@ -168,7 +168,7 @@ namespace AISWPF
 				int i = 0;
 				foreach (String name in AIS.Names.Values) {
 					i++;
-					pnlNames.Children.Add(getText(name, "", 200, i % 2 == 0 ? Brushes.LightGray : Brushes.LightSkyBlue));
+					pnlNames.Children.Add(getText(name, "", 300, i % 2 == 0 ? Brushes.LightGray : Brushes.LightSkyBlue));
 				}
 
 				i = 0;
